@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { QueryFilter, isValidObjectId } from "mongoose";
-import { Doctor, DoctorDoc } from "../models";
+import { Doctor, DoctorDoc, Patient } from "../models";
 import { ApiError } from "../utils/ApiError";
 import { escapeRegex } from "../utils/escapeRegex";
 import { ListDoctorsQuery } from "../validators/doctor.validators";
@@ -82,4 +82,16 @@ export async function getDoctorFilters(_req: Request, res: Response) {
         specializations: specializations.sort(),
         hospitals: hospitals.sort(),
     });
+}
+
+export async function deleteDoctor(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!isValidObjectId(id)) throw new ApiError(400, "Invalid doctor id");
+
+    const doctor = await Doctor.findByIdAndDelete(id).lean();
+    if (!doctor) throw new ApiError(404, "Doctor not found");
+
+    // No orphaned patients
+    const { deletedCount } = await Patient.deleteMany({ doctor: id });
+    res.json({ message: "Doctor deleted", patientsDeleted: deletedCount });
 }
