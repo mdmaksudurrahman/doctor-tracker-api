@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { env } from "./config/env";
 import authRoutes from "./routes/auth.routes";
 import doctorRoutes from "./routes/doctor.routes";
+import patientRoutes from "./routes/patient.routes";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/doctors", doctorRoutes);
+app.use("/api/patients", patientRoutes);
 
 // 404 handler
 app.use((_req, res) => {
