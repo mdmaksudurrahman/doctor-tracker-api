@@ -4,18 +4,18 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { env } from "./config/env";
+import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(helmet());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok" });
-});
+app.use("/api/auth", authRoutes);
 
 // 404 handler
 app.use((_req, res) => {
