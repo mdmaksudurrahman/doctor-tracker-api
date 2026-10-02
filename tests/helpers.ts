@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import request from "supertest";
 import app from "../src/app";
-import { Doctor, User } from "../src/models";
+import { Patient, Doctor, User } from "../src/models";
 
 export const ADMIN = { email: "admin@test.com", password: "Password123" };
 
@@ -30,3 +30,19 @@ export const doctorData = (overrides: Record<string, unknown> = {}) => ({
 
 export const createDoctorInDb = (overrides: Record<string, unknown> = {}) =>
     Doctor.create(doctorData(overrides));
+
+export const patientData = (overrides: Record<string, unknown> = {}) => ({
+    name: "Karim Uddin",
+    age: 45,
+    gender: "male" as const,
+    condition: "Hypertension",
+    phone: "01811000000",
+    ...overrides,
+});
+
+// Typed wrappers so tests can pass loose objects without editor errors
+export const createPatientInDb = (data: Record<string, unknown>) =>
+    Patient.create(data as any);
+
+export const createPatientsInDb = (data: Record<string, unknown>[]) =>
+    Patient.create(data as any[]);
