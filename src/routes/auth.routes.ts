@@ -8,6 +8,9 @@ import { login, loginSchema, logout, me } from "../controllers/auth.controller";
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: 20,
+    // Only failed attempts count: brute force stays limited, and users who share one
+    // address (everyone behind the frontend proxy) are not locked out by successful logins
+    skipSuccessfulRequests: true,
     message: { message: "Too many login attempts, try again later" },
 });
 

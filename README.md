@@ -9,7 +9,7 @@ Doctor Tracker is a secure administrative portal for managing doctors and their 
 | | |
 |---|---|
 | **Live API** | `https://doctor-tracker-api-cx5r.onrender.com` (health check: `/api/health`) |
-| **Live frontend** | `https://<your-app>.vercel.app` |
+| **Live frontend** | `https://doctor-tracker-web-gamma.vercel.app` |
 | **Frontend repository** | `https://github.com/mdmaksudurrahman/doctor-tracker-web` |
 | **Demo login** | Email: `admin@doctortracker.com` / Password: `Admin@12345` |
 
